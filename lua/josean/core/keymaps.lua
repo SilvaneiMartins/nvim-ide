@@ -1,23 +1,26 @@
-vim.g.mapleader = " "
+vim.g.mapleader = " "     -- define a tecla <leader> como espaço
 
-local keymap = vim.keymap -- for conciseness
+local keymap = vim.keymap -- atalho para criar keymaps
 
-keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
+-- Modo Insert
+keymap.set("i", "jk", "<ESC>", { desc = "Sair do modo insert com jk" })
 
-keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+-- Pesquisa
+keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Limpar destaques da busca" })
 
--- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+-- Incrementar/decrementar números
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Incrementar número" })
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrementar número" })
 
--- window management
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
+-- Gerenciamento de janelas
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split vertical" })
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split horizontal" })
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Ajustar splits para tamanho igual" })
+keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Fechar split atual" })
 
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
-keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+-- Gerenciamento de abas
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Abrir nova aba" })
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Fechar aba atual" })
+keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Ir para próxima aba" })
+keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Ir para aba anterior" })
+keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Abrir buffer atual em nova aba" })

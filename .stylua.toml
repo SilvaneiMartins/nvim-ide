@@ -1,2 +1,27 @@
+# ==========================
+# Configuração do StyLua
+# ==========================
+
+# Tipo de indentação: "Tabs" ou "Spaces"
 indent_type = "Spaces"
+
+# Largura do nível de indentação
 indent_width = 2
+
+# Largura máxima de coluna (equivalente ao printWidth do Prettier)
+column_width = 100
+
+# Adiciona vírgula no final de elementos de listas/tabelas
+# Opções: "Auto", "Always", "Never"
+# → No seu .prettierrc está como "none", então aqui mantemos:
+trailing_comma = "Never"
+
+# Inserir ponto e vírgula no final de instruções
+# true = sempre adiciona ;   |  false = remove quando possível
+call_parentheses = "None"
+
+# Mantém quebras de linha consistentes (LF no Linux/macOS, CRLF no Windows)
+newline_style = "Unix"
+
+# Define espaçamento interno de tabelas
+collapse_simple_statement = "Always"

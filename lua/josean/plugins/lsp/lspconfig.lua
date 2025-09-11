@@ -10,10 +10,8 @@ return {
     local lspconfig = require("lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-    -- Habilitar capacidades extras para integração com nvim-cmp
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    -- Função central para keymaps quando o LSP conecta
     local on_attach = function(_, bufnr)
       local map = function(mode, keys, func, desc)
         vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
@@ -34,7 +32,6 @@ return {
       map("n", "<leader>rs", ":LspRestart<CR>", "Reiniciar LSP")
     end
 
-    -- Configuração global de diagnósticos
     vim.diagnostic.config({
       signs = {
         text = {
@@ -44,38 +41,21 @@ return {
           [vim.diagnostic.severity.INFO]  = " ",
         },
       },
-      virtual_text = true,
+      virtual_text = { severity = vim.diagnostic.severity.ERROR }, -- 🔧 só mostra erro inline
       update_in_insert = false,
       severity_sort = true,
     })
 
-    -- 🔧 Configuração dos LSPs
-    lspconfig.ts_ls.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig.html.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig.cssls.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig.tailwindcss.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
+    -- 🔧 LSP servers
+    lspconfig.ts_ls.setup({ capabilities = capabilities, on_attach = on_attach })
+    lspconfig.html.setup({ capabilities = capabilities, on_attach = on_attach })
+    lspconfig.cssls.setup({ capabilities = capabilities, on_attach = on_attach })
+    lspconfig.tailwindcss.setup({ capabilities = capabilities, on_attach = on_attach })
 
     lspconfig.svelte.setup({
       capabilities = capabilities,
-      on_attach = on_attach,
-      -- Atualiza ao salvar arquivos JS/TS (necessário para Svelte)
       on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
+        on_attach(client, bufnr) -- chama seu keymap base
         vim.api.nvim_create_autocmd("BufWritePost", {
           group = vim.api.nvim_create_augroup("svelte_onsave", { clear = true }),
           pattern = { "*.js", "*.ts" },
@@ -95,7 +75,7 @@ return {
     lspconfig.emmet_ls.setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+      filetypes = { "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte" },
     })
 
     lspconfig.prismals.setup({
@@ -111,7 +91,7 @@ return {
     lspconfig.eslint.setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+      filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte" },
     })
 
     lspconfig.lua_ls.setup({
@@ -119,9 +99,7 @@ return {
       on_attach = on_attach,
       settings = {
         Lua = {
-          diagnostics = {
-            globals = { "vim" }, -- corrige "undefined-global"
-          },
+          diagnostics = { globals = { "vim" } },
           workspace = {
             library = vim.api.nvim_get_runtime_file("", true),
             checkThirdParty = false,

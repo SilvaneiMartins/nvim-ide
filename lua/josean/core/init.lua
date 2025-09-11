@@ -1,2 +1,3 @@
-require("josean.core.options")
-require("josean.core.keymaps")
+-- Carrega as configurações principais
+require("josean.core.options") -- opções do Neovim
+require("josean.core.keymaps") -- atalhos de teclado
