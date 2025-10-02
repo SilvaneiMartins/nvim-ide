@@ -18,6 +18,20 @@ require("lazy").setup({
     -- Importa automaticamente todos os arquivos de plugin dentro de lua/josean/plugins
     { import = "josean.plugins" },
     { import = "josean.plugins.lsp" },
+
+    -- Arquivos de Programas
+    {
+        "simrat39/rust-tools.nvim",
+        dependencies = {
+            "neovim/nvim-lsconfig",
+            "williambonan/mason.nvim",
+            "williambonan/mason-lsconfig.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = function ()
+            -- Carrega a config modular de Rust que foi criado /lua/josean/plugins/lsp/rust.lua
+        end,
+    }
 }, {
     checker = {
         enabled = true, -- verifica atualizações de plugin em background

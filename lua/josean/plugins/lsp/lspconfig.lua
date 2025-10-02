@@ -5,6 +5,8 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim",                   opts = {} },
+    --🔹 Adicionando suport ao Rust
+    "simrat39/rust-tools.nvim",
   },
   config = function()
     local lspconfig = require("lspconfig")
@@ -108,6 +110,43 @@ return {
           completion = { callSnippet = "Replace" },
         },
       },
+    })
+
+    --🔹 Adicionando: configuração do Rust via rust-tools
+    local rust_tools = require("rust-tools")
+
+    rust_tools.setup({
+        server = {
+            capabilities = capabilities,
+            on_attach = function (client, bufnr)
+                on_attach(client, bufnr) -- herda serus keymaps globais
+
+                -- atalhos extraas só para Rust
+                local map = function (mode, keys, func, desc)
+                    vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
+                end
+                
+                -- Atalhos específicos do Rust
+                map("n", "<leader>rr", "<cmd>RustRunnables<CR>", "Rust Runnables")
+                map("n", "<leader>rd", "<cmd>RustDebuggables<CR>", "Rust Debuggables")
+                map("n", "<leader>rh", "<cmd>RustHoverActions<CR>", "Hover Actions")
+                map("n", "<leader>re", "<cmd>RustExpandMacro<CR>", "Expand Macro")
+
+                --🔧 Rodar Clippy manualmente
+                map("n", "<leader>rc", "<cmd>!cargo clippy<CR>", "Rodar Clippy")
+
+                --🔧 Formatar com RustFmt
+                map("n", "<leader>rf", function ()
+                    vim.lsp.buf.format({ async = true })
+                end, "Formatar com RustFmt")
+            end,
+            settings = {
+                ["rust-analyzer"] = {
+                    cargo = { allFeatures = true },
+                    checkOnSave = { command = "clippy" },
+                },
+            },
+        },
     })
   end,
 }
