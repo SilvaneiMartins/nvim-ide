@@ -21,28 +21,28 @@ return {
 
         mason_lspconfig.setup({
             ensure_installed = {
-                "ts_ls",       -- TypeScript
-                "html",        -- HTML
-                "cssls",       -- CSS
-                "tailwindcss", -- TailwindCSS
-                "svelte",      -- Svelte
-                "lua_ls",      -- Lua
-                "graphql",     -- GraphQL
-                "emmet_ls",    -- Emmet
-                "prismals",    -- Prisma (⚠️ precisa instalar manualmente com npm install -g @prisma/language-server)
-                "pyright",     -- Python
-                "eslint",      -- ESLint
+                "tsserver",               -- ✅ TypeScript
+                "html",                   -- HTML
+                "cssls",                  -- CSS
+                "tailwindcss",            -- TailwindCSS
+                "svelte",                 -- Svelte
+                "lua_ls",                 -- Lua
+                "graphql",                -- GraphQL
+                "emmet_ls",               -- Emmet
+                "prisma-language-server", -- ✅ Prisma
+                "pyright",                -- Python
+                "eslint",                 -- ESLint
             },
         })
 
         mason_tool_installer.setup({
             ensure_installed = {
-                "prettier", -- formatter JS/TS
-                "stylua",  -- formatter Lua
-                "isort",   -- formatter Python
-                "black",   -- formatter Python
-                "pylint",  -- linter Python
-                "eslint_d", -- linter JS/TS
+                "prettier",  -- formatter JS/TS
+                "stylua",    -- formatter Lua
+                "isort",     -- formatter Python
+                "black",     -- formatter Python
+                "pylint",    -- linter Python
+                "eslint_d",  -- linter JS/TS
             },
             run_on_start = true, -- instala tudo ao abrir o Neovim
         })

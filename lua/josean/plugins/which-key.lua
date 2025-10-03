@@ -72,7 +72,7 @@ return {
 
             -- 🔹 Lua
             l = {
-                name = "lua",
+                name = "Lua",
                 f = { function ()
                     vim.lsp.buf.format({ async = true })
                 end, "Formatar código"},

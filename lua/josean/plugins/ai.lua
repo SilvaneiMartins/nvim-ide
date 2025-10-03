@@ -1,18 +1,26 @@
-return {
-  -- "jackMort/ChatGPT.nvim",
-  -- event = "VeryLazy",
-  -- dependencies = {
-  --   "MunifTanjim/nui.nvim",
-  --   "nvim-lua/plenary.nvim",
-  --   "folke/trouble.nvim",
-  --   "nvim-telescope/telescope.nvim",
-  -- },
-  -- config = function()
-  --   require("chatgpt").setup({
-  --     api_key_cmd = "op read op://Personal/open-ai-key/credential",
-  --   })
-  -- end,
-  -- keys = {
-  --   { "<leader>ai", "<cmd>ChatGPT<cr>", desc = "Open chatgpt" },
-  -- },
-}
+-- return {
+--   -- 🔹 ChatGPT.nvim (para uso direto com API da OpenAI)
+--   {
+--     "jackMort/ChatGPT.nvim",
+--     event = "VeryLazy",
+--     dependencies = {
+--       "MunifTanjim/nui.nvim",
+--       "nvim-lua/plenary.nvim",
+--       "folke/trouble.nvim",
+--       "nvim-telescope/telescope.nvim",
+--     },
+--     config = function()
+--       require("chatgpt").setup({
+--         api_key_cmd = "echo $OPENAI_API_KEY", -- 🔑 lê da variável de ambiente
+--         -- ou se você usa 1Password:
+--         -- api_key_cmd = "op read op://Personal/open-ai-key/credential",
+--       })
+--     end,
+--     keys = {
+--       { "<leader>ai", "<cmd>ChatGPT<cr>", desc = "Abrir ChatGPT" },
+--       { "<leader>ae", "<cmd>ChatGPTRun explain_code<cr>", desc = "Explicar Código" },
+--       { "<leader>ar", "<cmd>ChatGPTRun refactor_code<cr>", desc = "Refatorar Código" },
+--     },
+--   }
+-- }
+

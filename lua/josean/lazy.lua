@@ -23,13 +23,14 @@ require("lazy").setup({
     {
         "simrat39/rust-tools.nvim",
         dependencies = {
-            "neovim/nvim-lsconfig",
-            "williambonan/mason.nvim",
-            "williambonan/mason-lsconfig.nvim",
+            "neovim/nvim-lspconfig",
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
         config = function ()
-            -- Carrega a config modular de Rust que foi criado /lua/josean/plugins/lsp/rust.lua
+            -- Carrega a config modular de Rust que foi criado em lua/josean/plugins/lsp/rust.lua
+            -- require("josean.plugins.lsp.rust").setup() 
         end,
     }
 }, {
