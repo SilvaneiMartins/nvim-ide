@@ -51,10 +51,9 @@ return {
         -- Novo formato para LSPs
         -- ===============================
         local servers = {
-            tsserver    = {},
+            tsserver    = {}, -- typescript
             html        = {},
             cssls       = {},
-            tailwindcss = {},
             graphql     = { filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" } },
             emmet_ls    = { filetypes = { "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte" } },
             prismals    = {},
@@ -73,8 +72,25 @@ return {
                     },
                 },
             },
+            -- ✅ TailwindCSS com suporte a templates customizados
+            tailwindcss = {
+                filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte" },
+                settings = {
+                    tailwindCSS = {
+                        experimental = {
+                            classRegex = {
+                                "tw`([^`]*)", -- tw`text-lg bg-red-500`
+                                'tw="([^"]*)', -- tw="..."
+                                'tw={"([^"}]*)', -- tw={"..."}
+                                "tw\\.\\w+`([^`]*)", -- tw.xxx`...`
+                            },
+                        },
+                    },
+                },
+            },
         }
 
+        -- 🚀 Inicializa cada LSP (novo formato Neovim >= 0.11)
         for name, opts in pairs(servers) do
             opts.capabilities = capabilities
             opts.on_attach = on_attach
