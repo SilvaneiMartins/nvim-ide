@@ -9,16 +9,27 @@ return {
     vim.g.loaded_netrwPlugin = 1
 
     nvimtree.setup({
+      sort_by = "case_sensitive",
       view = {
-        width = 50,
+        side = "left",
+        width = 35, -- 👈 esse valor define a largura do painel
+        adaptive_size = true, -- ajusta dinamicamente conforme o conteúdo
         relativenumber = true,
       },
       -- change folder arrow icons
       renderer = {
+        group_empty = false,
+        highlight_git = true,
         indent_markers = {
           enable = true,
         },
         icons = {
+          show = {
+            git = true,
+            folder = true,
+            file = true,
+            folder_arrow = true,
+          },
           glyphs = {
             folder = {
               arrow_closed = "", -- arrow when folder is closed
@@ -39,6 +50,7 @@ return {
       },
       filters = {
         custom = { ".DS_Store" },
+        dotfiles = false,
       },
       git = {
         ignore = false,
