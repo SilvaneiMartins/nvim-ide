@@ -1,3 +1,7 @@
+-- ============================================================
+-- 🔧 Configuração visual e funcional dos diagnostics (LSP)
+-- ============================================================
+
 return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -32,7 +36,7 @@ return {
             map("n", "<leader>rs", ":LspRestart<CR>", "Reiniciar LSP")
         end
 
-        -- 🔧 Config global de diagnostics
+        -- 🔧 Configuração como os erros, warnings e dicas aparecem;
         vim.diagnostic.config({
             signs = {
                 text = {
@@ -42,10 +46,45 @@ return {
                     [vim.diagnostic.severity.INFO]  = " ",
                 },
             },
-            virtual_text = { severity = vim.diagnostic.severity.ERROR },
-            update_in_insert = false,
-            severity_sort = true,
+            --🔹 Mostra todos (não apenas erros)
+            virtual_text = {
+                source = "always", -- mostra de qual LSP veio o error 
+                prefix = "●", -- símbolo bonito no início
+                spacing = 2, -- espaçamento entre texto e código
+            },
+            underline = true, -- sublinha trechos com error
+            update_in_insert = true, -- atualiza mesmo enquanto digital
+            severity_sort = true, -- organiza por gravidade (erro > aviso)
+            float = {
+                border = "rounded", -- 🔹 borda arredondada
+                source = "always", -- Mostra de onde veio o error (Ex: eslint, tsserver)
+                focusable = false, -- não foca o popup automaticamente
+                prefix = "●", -- símbolo no popup
+                style = "minimal", -- estilo limpo e discreto
+            }
         })
+
+        -- ============================================================
+        -- 🎨 Estilos visuais para sublinhar erros e avisos
+        -- ============================================================
+
+        -- undercurl = sublinhado ondulado
+        -- sp = cor específica para o sublinhado (cor "special")
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#FF5555" }) -- vermelho
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { undercurl = true, sp = "#F1FA8C" }) -- amarelo
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo",  { undercurl = true, sp = "#8BE9FD" }) -- azul claro
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint",  { undercurl = true, sp = "#50FA7B" }) -- verde 
+
+        -- ============================================================
+        -- 💡 Atalhos úteis (caso queira lembrar)
+        -- ============================================================
+        -- ]d → vai para o próximo erro
+        -- [d → volta para o erro anterior
+        -- <leader>d → mostra o erro da linha em popup
+        -- <leader>D → mostra todos os diagnostics do arquivo (via Telescope)
+        -- ============================================================
+
+      
 
         -- ===============================
         -- Novo formato para LSPs

@@ -78,7 +78,17 @@ return {
                 end, "Formatar código"},
                 d = { "<cmd>LuaSnipEdit<CR>", "Editar snippets" },
                 r = { "<cmd>luafile %<CR>", "Rodar arquivo atual" },
-            }
+            },
+
+            -- Painel de notificações, errors ou dicas 
+            x = {
+                name = "Diasgnostics (Trouble)",
+                x = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Erros do Workspace" },
+                f = { "<cmd>TroubleToggle document_diagnostics<cr>", "Erros do Arquivo Atual" },
+                q = { "<cmd>TroubleToggle quickfix<cr>", "Lista de soluções rápidas" },
+                l = { "<cmd>TroubleToggle loclist<cr>", "Lista de localização" },
+                r = { "<cmd>TroubleToggle lsp_references<cr>", "Referências do LSP" },
+            },
         }, { prefix = "<leader>" })
     end
 }
