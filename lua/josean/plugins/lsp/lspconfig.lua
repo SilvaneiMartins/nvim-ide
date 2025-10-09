@@ -8,14 +8,17 @@ return {
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         { "antosha417/nvim-lsp-file-operations", config = true },
-        { "folke/neodev.nvim",                   opts = {} },
+        { "folke/neodev.nvim", opts = {} },
         "simrat39/rust-tools.nvim",
     },
+
     config = function()
         local cmp_nvim_lsp = require("cmp_nvim_lsp")
         local capabilities = cmp_nvim_lsp.default_capabilities()
 
-        -- 🔹 Função base para keymaps
+        ------------------------------------------------------------
+        -- 🔹 Keymaps padrão LSP
+        ------------------------------------------------------------
         local on_attach = function(_, bufnr)
             local map = function(mode, keys, func, desc)
                 vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
@@ -36,69 +39,67 @@ return {
             map("n", "<leader>rs", ":LspRestart<CR>", "Reiniciar LSP")
         end
 
-        -- 🔧 Configuração como os erros, warnings e dicas aparecem;
+        ------------------------------------------------------------
+        -- 💡 Diagnósticos (erros e avisos)
+        ------------------------------------------------------------
         vim.diagnostic.config({
             signs = {
                 text = {
                     [vim.diagnostic.severity.ERROR] = " ",
-                    [vim.diagnostic.severity.WARN]  = " ",
-                    [vim.diagnostic.severity.HINT]  = "󰠠 ",
-                    [vim.diagnostic.severity.INFO]  = " ",
+                    [vim.diagnostic.severity.WARN] = " ",
+                    [vim.diagnostic.severity.HINT] = "󰠠 ",
+                    [vim.diagnostic.severity.INFO] = " ",
                 },
             },
-            --🔹 Mostra todos (não apenas erros)
             virtual_text = {
-                source = "always", -- mostra de qual LSP veio o error 
-                prefix = "●", -- símbolo bonito no início
-                spacing = 2, -- espaçamento entre texto e código
+                source = "always",
+                prefix = "●",
+                spacing = 2,
             },
-            underline = true, -- sublinha trechos com error
-            update_in_insert = true, -- atualiza mesmo enquanto digital
-            severity_sort = true, -- organiza por gravidade (erro > aviso)
+            underline = true,
+            update_in_insert = true,
+            severity_sort = true,
             float = {
-                border = "rounded", -- 🔹 borda arredondada
-                source = "always", -- Mostra de onde veio o error (Ex: eslint, tsserver)
-                focusable = false, -- não foca o popup automaticamente
-                prefix = "●", -- símbolo no popup
-                style = "minimal", -- estilo limpo e discreto
-            }
+                border = "rounded",
+                source = "always",
+                focusable = false,
+                prefix = "●",
+                style = "minimal",
+            },
         })
 
-        -- ============================================================
-        -- 🎨 Estilos visuais para sublinhar erros e avisos
-        -- ============================================================
+        -- 🔹 Cores para undercurl de erros
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#FF5555" })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "#F1FA8C" })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "#8BE9FD" })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "#50FA7B" })
 
-        -- undercurl = sublinhado ondulado
-        -- sp = cor específica para o sublinhado (cor "special")
-        vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#FF5555" }) -- vermelho
-        vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { undercurl = true, sp = "#F1FA8C" }) -- amarelo
-        vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo",  { undercurl = true, sp = "#8BE9FD" }) -- azul claro
-        vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint",  { undercurl = true, sp = "#50FA7B" }) -- verde 
-
-        -- ============================================================
-        -- 💡 Atalhos úteis (caso queira lembrar)
-        -- ============================================================
-        -- ]d → vai para o próximo erro
-        -- [d → volta para o erro anterior
-        -- <leader>d → mostra o erro da linha em popup
-        -- <leader>D → mostra todos os diagnostics do arquivo (via Telescope)
-        -- ============================================================
-
-      
-
-        -- ===============================
-        -- Novo formato para LSPs
-        -- ===============================
+        ------------------------------------------------------------
+        -- 🌐 Servidores gerais
+        ------------------------------------------------------------
         local servers = {
-            tsserver    = {}, -- typescript
-            html        = {},
-            cssls       = {},
-            graphql     = { filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" } },
-            emmet_ls    = { filetypes = { "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte" } },
-            prismals    = {},
-            pyright     = {},
-            eslint      = { filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte" } },
-            lua_ls      = {
+            tsserver = {},
+            html = {},
+            cssls = {},
+            graphql = {
+                filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+            },
+            emmet_ls = {
+                filetypes = { "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte" },
+            },
+            prismals = {},
+            pyright = {},
+            eslint = {
+                filetypes = {
+                    "javascript",
+                    "typescript",
+                    "javascriptreact",
+                    "typescriptreact",
+                    "vue",
+                    "svelte",
+                },
+            },
+            lua_ls = {
                 settings = {
                     Lua = {
                         diagnostics = { globals = { "vim" } },
@@ -111,17 +112,16 @@ return {
                     },
                 },
             },
-            -- ✅ TailwindCSS com suporte a templates customizados
             tailwindcss = {
                 filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte" },
                 settings = {
                     tailwindCSS = {
                         experimental = {
                             classRegex = {
-                                "tw`([^`]*)", -- tw`text-lg bg-red-500`
-                                'tw="([^"]*)', -- tw="..."
-                                'tw={"([^"}]*)', -- tw={"..."}
-                                "tw\\.\\w+`([^`]*)", -- tw.xxx`...`
+                                "tw`([^`]*)",
+                                'tw="([^"]*)',
+                                'tw={"([^"}]*)',
+                                "tw%.%w+`([^`]*)",
                             },
                         },
                     },
@@ -129,7 +129,6 @@ return {
             },
         }
 
-        -- 🚀 Inicializa cada LSP (novo formato Neovim >= 0.11)
         for name, opts in pairs(servers) do
             opts.capabilities = capabilities
             opts.on_attach = on_attach
@@ -137,7 +136,9 @@ return {
             vim.lsp.enable(name)
         end
 
-        -- 🔹 Svelte precisa de autocmd extra
+        ------------------------------------------------------------
+        -- 🧩 Suporte a Svelte
+        ------------------------------------------------------------
         vim.lsp.config("svelte", {
             capabilities = capabilities,
             on_attach = function(client, bufnr)
@@ -153,11 +154,24 @@ return {
         })
         vim.lsp.enable("svelte")
 
-        -- ===============================
-        -- Configuração do Rust via rust-tools
-        -- ===============================
+        ------------------------------------------------------------
+        -- 🦀 Configuração aprimorada do Rust (rust-analyzer)
+        ------------------------------------------------------------
         local rust_tools = require("rust-tools")
+
         rust_tools.setup({
+            tools = {
+                autoSetHints = true,
+                hover_with_actions = true,
+                runnables = { use_telescope = true },
+                inlay_hints = {
+                    auto = true,
+                    only_current_line = false,
+                    show_parameter_hints = true,
+                    parameter_hints_prefix = " ",
+                    other_hints_prefix = "→ ",
+                },
+            },
             server = {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
@@ -167,7 +181,6 @@ return {
                         vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
                     end
 
-                    -- Atalhos específicos do Rust
                     map("n", "<leader>rr", "<cmd>RustRunnables<CR>", "Rust Runnables")
                     map("n", "<leader>rd", "<cmd>RustDebuggables<CR>", "Rust Debuggables")
                     map("n", "<leader>rh", "<cmd>RustHoverActions<CR>", "Hover Actions")
@@ -177,8 +190,25 @@ return {
                 end,
                 settings = {
                     ["rust-analyzer"] = {
-                        cargo = { allFeatures = true },
+                        cargo = {
+                            allFeatures = true,
+                            loadOutDirsFromCheck = true,
+                            buildScripts = { enable = true },
+                        },
                         checkOnSave = { command = "clippy" },
+                        imports = {
+                            granularity = { group = "module" },
+                            prefix = "crate",
+                        },
+                        procMacro = { enable = true },
+                        completion = {
+                            autoimport = { enable = true }, -- ✅ Import automático
+                            callable = { snippets = "add_parentheses" },
+                            postfix = { enable = true },
+                        },
+                        files = {
+                            excludeDirs = { "target", "node_modules" },
+                        },
                     },
                 },
             },

@@ -12,7 +12,7 @@ return {
       sort_by = "case_sensitive",
       view = {
         side = "left",
-        width = 35, -- 👈 esse valor define a largura do painel
+        width = 25, -- 👈 esse valor define a largura do painel
         adaptive_size = true, -- ajusta dinamicamente conforme o conteúdo
         relativenumber = true,
       },
