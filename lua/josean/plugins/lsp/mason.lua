@@ -21,7 +21,7 @@ return {
 
         mason_lspconfig.setup({
             ensure_installed = {
-                "tsserver",               -- ✅ TypeScript
+                "ts_ls",                  -- ✅ TypeScript (formerly tsserver)
                 "html",                   -- HTML
                 "cssls",                  -- CSS
                 "tailwindcss",            -- TailwindCSS
@@ -29,9 +29,10 @@ return {
                 "lua_ls",                 -- Lua
                 "graphql",                -- GraphQL
                 "emmet_ls",               -- Emmet
-                "prisma-language-server", -- ✅ Prisma
+                "prismals",               -- ✅ Prisma
                 "pyright",                -- Python
                 "eslint",                 -- ESLint
+                "rust_analyzer",          -- ✅ Rust
             },
         })
 

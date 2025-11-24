@@ -1,5 +1,9 @@
+-- ChatGPT plugin está desabilitado
+-- Para habilitar, descomente o código abaixo e configure sua API key
+
 -- return {
 --   -- 🔹 ChatGPT.nvim (para uso direto com API da OpenAI)
+
 --   {
 --     "jackMort/ChatGPT.nvim",
 --     event = "VeryLazy",
@@ -24,3 +28,5 @@
 --   }
 -- }
 
+-- Retorna uma tabela vazia quando o plugin está desabilitado
+return {}
