@@ -9,7 +9,6 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         { "antosha417/nvim-lsp-file-operations", config = true },
         { "folke/neodev.nvim", opts = {} },
-        "simrat39/rust-tools.nvim",
     },
 
     config = function()
@@ -45,10 +44,10 @@ return {
         vim.diagnostic.config({
             signs = {
                 text = {
-                    [vim.diagnostic.severity.ERROR] = " ",
-                    [vim.diagnostic.severity.WARN] = " ",
+                    [vim.diagnostic.severity.ERROR] = " ",
+                    [vim.diagnostic.severity.WARN] = " ",
                     [vim.diagnostic.severity.HINT] = "󰠠 ",
-                    [vim.diagnostic.severity.INFO] = " ",
+                    [vim.diagnostic.severity.INFO] = " ",
                 },
             },
             virtual_text = {
@@ -78,7 +77,7 @@ return {
         -- 🌐 Servidores gerais
         ------------------------------------------------------------
         local servers = {
-            tsserver = {},
+            ts_ls = {},
             html = {},
             cssls = {},
             graphql = {
@@ -157,61 +156,52 @@ return {
         ------------------------------------------------------------
         -- 🦀 Configuração aprimorada do Rust (rust-analyzer)
         ------------------------------------------------------------
-        local rust_tools = require("rust-tools")
+        vim.lsp.config("rust_analyzer", {
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
 
-        rust_tools.setup({
-            tools = {
-                autoSetHints = true,
-                hover_with_actions = true,
-                runnables = { use_telescope = true },
-                inlay_hints = {
-                    auto = true,
-                    only_current_line = false,
-                    show_parameter_hints = true,
-                    parameter_hints_prefix = " ",
-                    other_hints_prefix = "→ ",
-                },
-            },
-            server = {
-                capabilities = capabilities,
-                on_attach = function(client, bufnr)
-                    on_attach(client, bufnr)
+                local map = function(mode, keys, func, desc)
+                    vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
+                end
 
-                    local map = function(mode, keys, func, desc)
-                        vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
-                    end
-
-                    map("n", "<leader>rr", "<cmd>RustRunnables<CR>", "Rust Runnables")
-                    map("n", "<leader>rd", "<cmd>RustDebuggables<CR>", "Rust Debuggables")
-                    map("n", "<leader>rh", "<cmd>RustHoverActions<CR>", "Hover Actions")
-                    map("n", "<leader>re", "<cmd>RustExpandMacro<CR>", "Expand Macro")
-                    map("n", "<leader>rc", "<cmd>!cargo clippy<CR>", "Rodar Clippy")
-                    map("n", "<leader>rf", function() vim.lsp.buf.format({ async = true }) end, "Formatar com RustFmt")
-                end,
-                settings = {
-                    ["rust-analyzer"] = {
-                        cargo = {
-                            allFeatures = true,
-                            loadOutDirsFromCheck = true,
-                            buildScripts = { enable = true },
-                        },
-                        checkOnSave = { command = "clippy" },
-                        imports = {
-                            granularity = { group = "module" },
-                            prefix = "crate",
-                        },
-                        procMacro = { enable = true },
-                        completion = {
-                            autoimport = { enable = true }, -- ✅ Import automático
-                            callable = { snippets = "add_parentheses" },
-                            postfix = { enable = true },
-                        },
-                        files = {
-                            excludeDirs = { "target", "node_modules" },
-                        },
+                -- Keybinds específicos do Rust
+                map("n", "<leader>rc", "<cmd>!cargo clippy<CR>", "Rodar Clippy")
+                map("n", "<leader>rf", function() vim.lsp.buf.format({ async = true }) end, "Formatar com RustFmt")
+                map("n", "<leader>rt", "<cmd>!cargo test<CR>", "Rodar Testes")
+                map("n", "<leader>rb", "<cmd>!cargo build<CR>", "Build Cargo")
+            end,
+            settings = {
+                ["rust-analyzer"] = {
+                    cargo = {
+                        allFeatures = true,
+                        loadOutDirsFromCheck = true,
+                        buildScripts = { enable = true },
+                    },
+                    checkOnSave = { command = "clippy" },
+                    imports = {
+                        granularity = { group = "module" },
+                        prefix = "crate",
+                    },
+                    procMacro = { enable = true },
+                    completion = {
+                        autoimport = { enable = true },
+                        callable = { snippets = "add_parentheses" },
+                        postfix = { enable = true },
+                    },
+                    files = {
+                        excludeDirs = { "target", "node_modules" },
+                    },
+                    -- Inlay hints (dicas visuais no código)
+                    inlayHints = {
+                        enable = true,
+                        chainingHints = { enable = true },
+                        parameterHints = { enable = true },
+                        typeHints = { enable = true },
                     },
                 },
             },
         })
+        vim.lsp.enable("rust_analyzer")
     end,
 }
