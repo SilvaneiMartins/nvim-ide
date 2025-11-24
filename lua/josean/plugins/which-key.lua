@@ -1,94 +1,109 @@
 return {
-    "folke/which-key.nvim",
-    
-    event = "VeryLazy",
-    
-    init = function ()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 500
-    end,
-    config = function ()
-        local wk = require("which-key")
+  "folke/which-key.nvim",
+  event = "VeryLazy",
 
-        wk.setup({})
+  init = function()
+    vim.o.timeout = true
+    vim.o.timeoutlen = 500
+  end,
 
-        wk.register({
-            -- 🔹 Rust
-            r = {
-                name = "Rust",
-                r = { "<cmd>RustRunnables<CR>", "Runnables" },
-                d = { "<cmd>RustDebuggables<CR>", "Debuggables" },
-                h = { "<cmd>RustHoverActions<CR>", "Hover Actions" },
-                e = { "<cmd>RustExpandMacro<CR>", "Expand Macro" },
-                c = { "<cmd>!cargo clippy<CR>", "Rodar Clippy" },
-                f = { function ()
-                    vim.lsp.buf.format({ async = true })
-                end, "Formatar (RustFmt)" },
-            },
+  config = function()
+    local wk = require("which-key")
 
-            -- 🔹 TypeScript
-            t = {
-                name = "TypeScript",
-                o = { "<cmd>TypescriptOrganizeImports<CR>", "Organizar impotos" },
-                r = { "<cmd>TypescriptRenameFile<CR>", "Renomear arquivos"},
-                f = { function ()
-                    vim.lsp.buf.format({ async = true })
-                end, "Formatar código" },
-                i = { "<cmd>TSToolsAddMissingImports<CR>", "Adicionar importes faltando" },
-                u = { "<cmd>TSToolsRemoveUnused<CR>", "Remover não utilizado" },
-            },
+    wk.setup({})
 
-            -- 🔹 Python
-            p = {
-                name = "Python",
-                r = { "<cmd>!python3 %<CR>", "Rodar arquivo atual" },
-                t = { "<cmd>!pytest<CR>", "Rodar pytest" },
-                f = { function ()
-                    vim.lsp.buf.format({ async = true })
-                end, "Formatar código (Black)" },
-                l = { "<cmd>!pylint %<CR>", "Rodar pylint no arquivo" },
-            },
+    wk.add({
+      -- 🔹 Rust
+      { "<leader>r",  group = "Rust" },
+      { "<leader>rr", "<cmd>RustRunnables<CR>",       desc = "Runnables" },
+      { "<leader>rd", "<cmd>RustDebuggables<CR>",     desc = "Debuggables" },
+      { "<leader>rh", "<cmd>RustHoverActions<CR>",    desc = "Hover Actions" },
+      { "<leader>re", "<cmd>RustExpandMacro<CR>",     desc = "Expand Macro" },
+      { "<leader>rc", "<cmd>!cargo clippy<CR>",       desc = "Rodar Clippy" },
+      {
+        "<leader>rf",
+        function()
+          vim.lsp.buf.format({ async = true })
+        end,
+        desc = "Formatar (RustFmt)",
+      },
 
-            -- 🔹 JavaScript
-            j = {
-                name = "JavaScript",
-                r = { "<cmd>!node %<CR>", "Rodar arquivo atual" },
-                f = { function ()
-                    vim.lsp.buf.format({ async = true })
-                end, "Rodar código (Prettier/ESLint)" },
-                o = { "<cmd>EslintFixAll<CR>", "Corrigir com ESLint" },
-                t = { "<cmd>!npm test<CR>", "Rodar test (npm)" },
-            },
+      -- 🔹 TypeScript
+      { "<leader>t",  group = "TypeScript" },
+      { "<leader>to", "<cmd>TypescriptOrganizeImports<CR>", desc = "Organizar imports" },
+      { "<leader>tr", "<cmd>TypescriptRenameFile<CR>",      desc = "Renomear arquivo" },
+      {
+        "<leader>tf",
+        function()
+          vim.lsp.buf.format({ async = true })
+        end,
+        desc = "Formatar código",
+      },
+      { "<leader>ti", "<cmd>TSToolsAddMissingImports<CR>",  desc = "Add imports faltando" },
+      { "<leader>tu", "<cmd>TSToolsRemoveUnused<CR>",       desc = "Remover não usados" },
 
-            -- 🔹 HTML & CSS
-            h = {
-                name = "HTML/CSS",
-                f = { function ()
-                    vim.lsp.buf.format({ async = true })
-                end, "Formatar código"},
-                v = { "<cmd>EmmetInstall<CR>", "Emmet Expand" },
-                p = { "<cmd>!prettier --write %<CR>", "Formatar com prettier" },
-            },
+      -- 🔹 Python
+      { "<leader>p",  group = "Python" },
+      { "<leader>pr", "<cmd>!python3 %<CR>",           desc = "Rodar arquivo atual" },
+      { "<leader>pt", "<cmd>!pytest<CR>",              desc = "Rodar pytest" },
+      {
+        "<leader>pf",
+        function()
+          vim.lsp.buf.format({ async = true })
+        end,
+        desc = "Formatar código (Black)",
+      },
+      { "<leader>pl", "<cmd>!pylint %<CR>",            desc = "Rodar pylint no arquivo" },
 
-            -- 🔹 Lua
-            l = {
-                name = "Lua",
-                f = { function ()
-                    vim.lsp.buf.format({ async = true })
-                end, "Formatar código"},
-                d = { "<cmd>LuaSnipEdit<CR>", "Editar snippets" },
-                r = { "<cmd>luafile %<CR>", "Rodar arquivo atual" },
-            },
+      -- 🔹 JavaScript
+      { "<leader>j",  group = "JavaScript" },
+      { "<leader>jr", "<cmd>!node %<CR>",              desc = "Rodar arquivo atual" },
+      {
+        "<leader>jf",
+        function()
+          vim.lsp.buf.format({ async = true })
+        end,
+        desc = "Formatar código (Prettier/ESLint)",
+      },
+      { "<leader>jo", "<cmd>EslintFixAll<CR>",         desc = "Corrigir com ESLint" },
+      { "<leader>jt", "<cmd>!npm test<CR>",            desc = "Rodar test (npm)" },
 
-            -- Painel de notificações, errors ou dicas 
-            x = {
-                name = "Diasgnostics (Trouble)",
-                x = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Erros do Workspace" },
-                f = { "<cmd>TroubleToggle document_diagnostics<cr>", "Erros do Arquivo Atual" },
-                q = { "<cmd>TroubleToggle quickfix<cr>", "Lista de soluções rápidas" },
-                l = { "<cmd>TroubleToggle loclist<cr>", "Lista de localização" },
-                r = { "<cmd>TroubleToggle lsp_references<cr>", "Referências do LSP" },
-            },
-        }, { prefix = "<leader>" })
-    end
+      -- 🔹 HTML & CSS
+      { "<leader>h",  group = "HTML/CSS" },
+      {
+        "<leader>hf",
+        function()
+          vim.lsp.buf.format({ async = true })
+        end,
+        desc = "Formatar código",
+      },
+      { "<leader>hv", "<cmd>EmmetInstall<CR>",         desc = "Emmet Expand" },
+      { "<leader>hp", "<cmd>!prettier --write %<CR>",  desc = "Formatar com prettier" },
+
+      -- 🔹 Lua
+      { "<leader>l",  group = "Lua" },
+      {
+        "<leader>lf",
+        function()
+          vim.lsp.buf.format({ async = true })
+        end,
+        desc = "Formatar código",
+      },
+      { "<leader>ld", "<cmd>LuaSnipEdit<CR>",          desc = "Editar snippets" },
+      { "<leader>lr", "<cmd>luafile %<CR>",            desc = "Rodar arquivo atual" },
+
+      -- 🔹 Diagnostics (Trouble)
+      { "<leader>x",  group = "Diagnostics (Trouble)" },
+      { "<leader>xx", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Erros do Workspace" },
+      { "<leader>xf", "<cmd>TroubleToggle document_diagnostics<cr>",  desc = "Erros do Arquivo Atual" },
+      { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",              desc = "Lista de soluções rápidas" },
+      { "<leader>xl", "<cmd>TroubleToggle loclist<cr>",               desc = "Lista de localização" },
+      { "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>",        desc = "Referências do LSP" },
+    }, {
+      mode = "n",
+      silent = true,
+      noremap = true,
+      -- sem prefix aqui, porque já estamos colocando <leader> explícito em cada lhs
+    })
+  end,
 }
