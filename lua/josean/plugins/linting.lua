@@ -6,7 +6,17 @@ return {
 
     lint.linters_by_ft = {
       python = { "pylint" },
+      javascript = { "eslint_d" },
+      typescript = { "eslint_d" },
+      javascriptreact = { "eslint_d" },
+      typescriptreact = { "eslint_d" },
+      go = { "golangci_lint" },
     }
+
+    if vim.fn.executable("clang-tidy") == 1 then
+      lint.linters_by_ft.c = { "clang_tidy" }
+      lint.linters_by_ft.cpp = { "clang_tidy" }
+    end
 
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 

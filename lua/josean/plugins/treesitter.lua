@@ -35,6 +35,9 @@ return {
                 "query",
                 "vimdoc",
                 "c",
+                "cpp",      -- ✅ C++
+                "go",       -- ✅ Go
+                "cmake",    -- ✅ CMake
             },
             incremental_selection = {
                 enable = true,

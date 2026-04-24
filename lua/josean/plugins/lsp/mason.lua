@@ -33,17 +33,22 @@ return {
                 "pyright",                -- Python
                 "eslint",                 -- ESLint
                 "rust_analyzer",          -- ✅ Rust
+                "clangd",                 -- ✅ C/C++
+                "gopls",                  -- ✅ Go
             },
         })
 
         mason_tool_installer.setup({
             ensure_installed = {
-                "prettier",  -- formatter JS/TS
-                "stylua",    -- formatter Lua
-                "isort",     -- formatter Python
-                "black",     -- formatter Python
-                "pylint",    -- linter Python
-                "eslint_d",  -- linter JS/TS
+                "prettier",       -- formatter JS/TS
+                "stylua",         -- formatter Lua
+                "isort",          -- formatter Python
+                "black",          -- formatter Python
+                "pylint",         -- linter Python
+                "eslint_d",       -- linter JS/TS
+                "clang-format",   -- formatter C/C++
+                "golangci-lint",  -- linter Go
+                "cmake-language-server", -- LSP CMake
             },
             run_on_start = true, -- instala tudo ao abrir o Neovim
         })
