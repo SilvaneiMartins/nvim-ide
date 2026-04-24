@@ -203,5 +203,72 @@ return {
             },
         })
         vim.lsp.enable("rust_analyzer")
+
+        ------------------------------------------------------------
+        -- 🔨 C/C++ (clangd)
+        ------------------------------------------------------------
+        vim.lsp.config("clangd", {
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
+
+                local map = function(mode, keys, func, desc)
+                    vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
+                end
+
+                -- Keybinds específicos de C/C++
+                map("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<CR>", "Switch header/source")
+                map("n", "<leader>cf", function() vim.lsp.buf.format({ async = true }) end, "Format (clang-format)")
+            end,
+            cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
+            filetypes = { "c", "cpp", "objc", "objcpp" },
+            settings = {
+                clangd = {
+                    InlayHints = {
+                        Enabled = true,
+                        ParameterHints = true,
+                        TypeHints = true,
+                        ChainingHints = true,
+                    },
+                },
+            },
+        })
+        vim.lsp.enable("clangd")
+
+        ------------------------------------------------------------
+        -- 🐹 Go (gopls)
+        ------------------------------------------------------------
+        vim.lsp.config("gopls", {
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
+
+                local map = function(mode, keys, func, desc)
+                    vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
+                end
+
+                -- Keybinds específicos de Go
+                map("n", "<leader>gr", "<cmd>!go run .<CR>", "Run")
+                map("n", "<leader>gt", "<cmd>!go test ./...<CR>", "Test")
+                map("n", "<leader>gb", "<cmd>!go build<CR>", "Build")
+                map("n", "<leader>gf", function() vim.lsp.buf.format({ async = true }) end, "Format (gofmt)")
+            end,
+            settings = {
+                gopls = {
+                    analyses = {
+                        unusedparams = true,
+                        shadow = true,
+                    },
+                    staticcheck = true,
+                    gofumpt = false,
+                    usePlaceholders = true,
+                    completeUnimported = true,
+                    directoryFilters = { "-.git", "-.vscode", "-node_modules" },
+                    semanticTokens = true,
+                },
+            },
+            filetypes = { "go", "gomod", "gosum", "gotmpl" },
+        })
+        vim.lsp.enable("gopls")
     end,
 }
