@@ -12,11 +12,11 @@ return {
       sort_by = "case_sensitive",
       view = {
         side = "left",
-        width = 25, -- 👈 esse valor define a largura do painel
+        width = 40, -- 👈 esse valor define a largura do painel
         adaptive_size = true, -- ajusta dinamicamente conforme o conteúdo
         relativenumber = true,
       },
-      -- change folder arrow icons
+      -- Alterar ícones de seta da pasta
       renderer = {
         group_empty = false,
         highlight_git = true,
@@ -32,15 +32,15 @@ return {
           },
           glyphs = {
             folder = {
-              arrow_closed = "", -- arrow when folder is closed
-              arrow_open = "", -- arrow when folder is open
+              arrow_closed = "", -- seta quando a pasta está fechada
+              arrow_open = "", -- seta quando a pasta está aberta
             },
           },
         },
       },
-      -- disable window_picker for
-      -- explorer to work well with
-      -- window splits
+      -- desativar o seletor de janelas para
+      -- explorador para trabalhar bem com
+      -- divisão de janelas
       actions = {
         open_file = {
           window_picker = {
@@ -57,12 +57,16 @@ return {
       },
     })
 
-    -- set keymaps
-    local keymap = vim.keymap -- for conciseness
+    -- Configurar mapeamento de teclas
+    local keymap = vim.keymap -- para maior concisão
 
-    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+    -- alternar explorador de arquivos
+    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) 
+    -- Alternar o explorador de arquivos no arquivo atual
+    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) 
+    -- recolher explorador de arquivos
+    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) 
+    -- atualizar explorador de arquivos
+    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) 
   end,
 }
