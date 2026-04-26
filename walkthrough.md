@@ -53,7 +53,7 @@ No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
 
 ### Sessão 3: Erro de Módulo AI
 ```
-Invalid spec module: `josean.plugins.ai`
+Invalid spec module: `martins.plugins.ai`
 Expected a `table` of specs, but a `nil` was returned instead
 ```
 
@@ -253,14 +253,14 @@ mason_lspconfig.setup({
 
 | Arquivo | Localização | Mudança Principal |
 |---------|-------------|-------------------|
-| `telescope.lua` | `lua/josean/plugins/` | Removido build cmake |
-| `nvim-cmp.lua` | `lua/josean/plugins/` | Removido build make |
-| `lspconfig.lua` | `lua/josean/plugins/lsp/` | Rust-tools → rust-analyzer direto |
-| `treesitter.lua` | `lua/josean/plugins/` | Removido build + auto_install |
-| `ai.lua` | `lua/josean/plugins/` | Adicionado `return {}` |
-| `which-key.lua` | `lua/josean/plugins/` | API v2 → v3 |
-| `mason.lua` | `lua/josean/plugins/lsp/` | Corrigido nome Prisma |
-| `rust.lua` | `lua/josean/plugins/lsp/` | ❌ Deletado |
+| `telescope.lua` | `lua/martins/plugins/` | Removido build cmake |
+| `nvim-cmp.lua` | `lua/martins/plugins/` | Removido build make |
+| `lspconfig.lua` | `lua/martins/plugins/lsp/` | Rust-tools → rust-analyzer direto |
+| `treesitter.lua` | `lua/martins/plugins/` | Removido build + auto_install |
+| `ai.lua` | `lua/martins/plugins/` | Adicionado `return {}` |
+| `which-key.lua` | `lua/martins/plugins/` | API v2 → v3 |
+| `mason.lua` | `lua/martins/plugins/lsp/` | Corrigido nome Prisma |
+| `rust.lua` | `lua/martins/plugins/lsp/` | ❌ Deletado |
 
 ---
 

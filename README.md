@@ -12,7 +12,7 @@ Este repositório contém uma configuração modular do **Neovim** usando o gere
 
 ├── init.lua                 # Ponto de entrada da configuração
 └── lua
-    └── josean
+    └── martins
         ├── core
         │   ├── init.lua     # Carrega opções básicas e keymaps
         │   ├── options.lua  # Configurações de editor (indentação, cores, etc.)
@@ -34,8 +34,8 @@ Este repositório contém uma configuração modular do **Neovim** usando o gere
 Arquivo de entrada simples que apenas importa os módulos principais:
 
 ```lua
-require("josean.core")
-require("josean.lazy")
+require("martins.core")
+require("martins.lazy")
 ```
 
 ### `core/options.lua`
@@ -73,7 +73,7 @@ Define atalhos úteis:
     -   `install.colorscheme` para já baixar temas
     -   Desativa plugins embutidos do Vim que não são necessários (melhora a performance)
 
--   Importa automaticamente as configurações da pasta `lua/josean/plugins/`
+-   Importa automaticamente as configurações da pasta `lua/martins/plugins/`
 
 ### `plugins/lspconfig.lua`
 

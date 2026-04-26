@@ -1,6 +1,6 @@
 # Tutorial de Comandos Basicos do Neovim
 
-Este guia foi criado a partir dos atalhos configurados em `lua/josean/core/keymaps.lua` e dos plugins principais desta configuracao.
+Este guia foi criado a partir dos atalhos configurados em `lua/martins/core/keymaps.lua` e dos plugins principais desta configuracao.
 
 Nesta configuracao, a tecla `<leader>` e o espaco. Entao, quando o guia disser `<leader>ee`, pressione `Espaco`, depois `e`, depois `e`.
 
