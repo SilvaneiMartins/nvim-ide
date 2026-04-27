@@ -8,6 +8,7 @@
 (_______/ (__\_|_)\_______)\__/(___/    \___)\___|\____\) \_______)(__\_|_)
 
 ]]
+vim.o.shell = "cmd.exe"
 
 require("martins.core")
 require("martins.lazy")
