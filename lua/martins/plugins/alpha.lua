@@ -32,7 +32,7 @@ return {
             [[                        ░                                 ]],
             " ",
             " ",
-            "                  🚀 SILVANEI MARTINS 🚀                   ",
+            "                   🚀 SILVANEI MARTINS 🚀                   ",
         }
 
         dashboard.section.header.opts.hl = "DashboardHeader"
